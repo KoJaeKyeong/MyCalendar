@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class CollectionView: UIView {
+final class CalendarView: UIView {
     
     var daysOfMonth = [String]()
     
-    lazy var collectionView: UICollectionView = {
+    lazy var calendarView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         return collectionView
@@ -19,13 +19,13 @@ final class CollectionView: UIView {
     
     var delegate: UICollectionViewDelegate? {
         didSet {
-            collectionView.delegate = delegate
+            calendarView.delegate = delegate
         }
     }
 
     var dataSource: UICollectionViewDataSource? {
         didSet {
-            collectionView.dataSource = dataSource
+            calendarView.dataSource = dataSource
         }
     }
     
@@ -45,16 +45,16 @@ final class CollectionView: UIView {
     }
     
     private func addViews() {
-        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "calendarCell")
-        addSubview(collectionView)
+        calendarView.register(CalendarViewCell.self, forCellWithReuseIdentifier: "calendarCell")
+        addSubview(calendarView)
     }
     
     private func addConstraintsOnViews() {
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        calendarView.translatesAutoresizingMaskIntoConstraints = false
+        calendarView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        calendarView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        calendarView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        calendarView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
     
     private func updateDaysOfMonth() {
@@ -79,6 +79,6 @@ final class CollectionView: UIView {
     }
     
     private func reloadData() {
-        collectionView.reloadData()
+        calendarView.reloadData()
     }
 }

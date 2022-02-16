@@ -11,16 +11,9 @@ class ViewController: UIViewController {
     
     private lazy var contentView = UIView()
     private lazy var topView = TopView()
-    private lazy var calendarView = CollectionView()
+    private lazy var calendarView = CalendarView()
     private lazy var dayStackView = DayStackView()
     private lazy var alertViewController = AlertViewController()
-    
-    var schedule: String?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,9 +72,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as? CollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as? CalendarViewCell else {
             return UICollectionViewCell()
         }
+
         cell.updateLabel(day: calendarView.daysOfMonth[indexPath.item])
         return cell
     }
@@ -102,6 +96,16 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         let daysOfWeek = [0: "Sun", 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri", 6: "Sat"]
         alertViewController.modalPresentationStyle = .overFullScreen
         alertViewController.titleLabel.text = "\(daysOfWeek[indexPath.item % 7] ?? "") \(indexPath.item - 1), \(month[dateComponents.month ?? 1] ?? "")"
+        alertViewController.indexPath = indexPath
+        alertViewController.delegate = self
         self.present(alertViewController, animated: false, completion: nil)
+    }
+}
+
+// MARK: - EditingDidEndDelegate 구현
+extension ViewController: DidTappedConfirmButtonDelegate {
+    func didTappedConfirmButtonDelegate(data: String, indexPath: IndexPath) {
+        guard let cell = calendarView.calendarView.cellForItem(at: indexPath) as? CalendarViewCell else { return }
+        cell.configureScheduleView(data: data)
     }
 }

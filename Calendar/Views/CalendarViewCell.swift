@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class CollectionViewCell: UICollectionViewCell {
+final class CalendarViewCell: UICollectionViewCell {
+    
+    private lazy var scheduleView = ScheduleView()
     
     private lazy var dayOfMonth: UILabel = {
         let label = UILabel()
@@ -41,6 +43,18 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     func updateLabel(day: String) {
+        if day == "" {
+            isUserInteractionEnabled = false
+        }
         dayOfMonth.text = day
+    }
+    
+    func configureScheduleView(data: String) {
+        scheduleView.scheduleLabel.text = data
+        addSubview(scheduleView)
+        scheduleView.translatesAutoresizingMaskIntoConstraints = false
+        scheduleView.topAnchor.constraint(equalTo: dayOfMonth.bottomAnchor).isActive = true
+        scheduleView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        scheduleView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
 }

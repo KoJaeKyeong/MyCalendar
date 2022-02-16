@@ -9,7 +9,7 @@ import UIKit
 
 final class DayStackView: UIStackView {
     
-    let daysOfWeek = ["Sun", "Mon", "Tus", "Wen", "Thu", "Fri", "Sat"]
+    private let daysOfWeek = ["Sun", "Mon", "Tus", "Wen", "Thu", "Fri", "Sat"]
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()

@@ -9,7 +9,7 @@ import UIKit
 
 class ScheduleView: UIView {
     
-    private lazy var scheduleLabel: UILabel = {
+    lazy var scheduleLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .randomColor
         label.font = .systemFont(ofSize: 12)
