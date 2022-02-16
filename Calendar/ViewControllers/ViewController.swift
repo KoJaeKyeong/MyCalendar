@@ -13,6 +13,14 @@ class ViewController: UIViewController {
     private lazy var topView = TopView()
     private lazy var calendarView = CollectionView()
     private lazy var dayStackView = DayStackView()
+    private lazy var alertViewController = AlertViewController()
+    
+    var schedule: String?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,9 +99,9 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         let calendar = Calendar.current
         let dateComponents = calendar.dateComponents([.weekday, .month, .day], from: Date())
         let month = [1: "Jan",2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"]
-        let alertViewController = AlertViewController()
+        let daysOfWeek = [0: "Sun", 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri", 6: "Sat"]
         alertViewController.modalPresentationStyle = .overFullScreen
-        alertViewController.titleLabel.text = "\(dateComponents.day ?? 0),\(month[dateComponents.month ?? 1] ?? "")"
+        alertViewController.titleLabel.text = "\(daysOfWeek[indexPath.item % 7] ?? "") \(indexPath.item - 1), \(month[dateComponents.month ?? 1] ?? "")"
         self.present(alertViewController, animated: false, completion: nil)
     }
 }

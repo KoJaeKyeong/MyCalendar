@@ -9,6 +9,8 @@ import UIKit
 
 class AlertViewController: UIViewController {
     
+    let calendarViewController = ViewController()
+    
     lazy var contentView: UIView = {
         let view = UIView()
         view.alpha = 1
@@ -36,12 +38,22 @@ class AlertViewController: UIViewController {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         textField.font = .systemFont(ofSize: 20)
+        textField.addTarget(self, action: #selector(editingDidEndScheduleTextField(_:)), for: .editingDidEnd)
         return textField
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        resetScheduleTextField()
+    }
+    
+    func resetScheduleTextField() {
+        scheduleTextField.text = ""
     }
     
     private func configureViews() {
@@ -82,5 +94,9 @@ class AlertViewController: UIViewController {
     
     @objc func didTappedConfirmButton(_ sender: UIButton) {
         dismiss(animated: false, completion: nil)
+    }
+    
+    @objc func editingDidEndScheduleTextField(_ sender: UITextField) {
+        calendarViewController.schedule = scheduleTextField.text
     }
 }
